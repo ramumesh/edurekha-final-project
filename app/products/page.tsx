@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { Input } from "antd";
 import { useAppDispatch } from "../../lib/hooks/redux";
-import loginImg from "../../lib/assets/images/dfimg.jpg";
+import productImage from "../../lib/assets/images/packing-product-icon.webp";
 import Image from "next/image";
+import Link from "next/link";
 
 interface Product {
   _id: string;
@@ -81,7 +82,7 @@ export default function ProductsPage() {
   }
 
   return (
-    <div>
+    <div className="mb-20">
       <div
         style={{
           justifyContent: "center",
@@ -100,53 +101,51 @@ export default function ProductsPage() {
           prefix={<SearchOutlined />}
         />
       </div>
-      <div className="grid grid-cols-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
         {products.map((e) => (
-          <div className="my-8" key={e.productId}>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex flex-wrap -m-4">
-                <div className="p-4 ">
-                  <div className="h-full bg-white shadow-sm rounded-md overflow-hidden">
-                    {/* image */}
-                    <Image
-                      className="object-cover "
-                      src={loginImg}
-                      alt="Image Alt Text"
-                      priority={true}
-                    />
-                    <div className="p-6">
-                      <h2 className="text-base font-medium text-indigo-600 mb-1">
-                        {e.productName}
-                      </h2>
-                      <h1 className="text-gray-600 ml-auto">{e.brandName}</h1>
-                      {/* <p className="text-gray-600 ml-auto">
+          <div className="flex flex-wrap items-stretch" key={e.productId}>
+            <div className="p-4 ">
+              <div className="h-full bg-white shadow-sm rounded-md overflow-hidden">
+                {/* image */}
+                <Link href={`/products/${e.productId}`}>
+                  <Image
+                    className="object-cover "
+                    src={productImage}
+                    alt="Image Alt Text"
+                    priority={true}
+                  />
+                </Link>
+                <div className="p-6">
+                  <h2 className="text-base font-medium text-gray-900 mb-1">
+                    {e.productName}
+                  </h2>
+                  <h1 className="text-gray-600 ml-auto">{e.brandName}</h1>
+                  {/* <p className="text-gray-600 ml-auto">
                         {e.productDescription}
                       </p> */}
-                      <div className="flex items-center flex-wrap ">
-                        <a
-                          href={`/products/${e.productId}`}
-                          className="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0"
-                        >
-                          Learn More
-                          <svg
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="2"
-                            className="w-4 h-4 ml-2"
-                            viewBox="0 0 24 24"
-                          >
-                            <path d="M5 12h14M12 5l7 7-7 7"></path>
-                          </svg>
-                        </a>
-                      </div>
-                      <div>
-                        <span className="text-gray-600 ml-auto">
-                          Price : £{e.productPrice}
-                        </span>
-                      </div>
-                    </div>
+                  <div>
+                    <span className="text-gray-600 ml-auto">
+                      Price : €{e.productPrice}
+                    </span>
+                  </div>
+                  <div className="flex items-center flex-wrap ">
+                    <a
+                      href={`/products/${e.productId}`}
+                      className="text-green-500 inline-flex items-center md:mb-2 lg:mb-0"
+                    >
+                      Buy Now
+                      <svg
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        className="w-4 h-4 ml-2"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M5 12h14M12 5l7 7-7 7"></path>
+                      </svg>
+                    </a>
                   </div>
                 </div>
               </div>

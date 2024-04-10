@@ -1,8 +1,8 @@
+import { ProductModel } from "@/lib/db/model/products";
 import connectDB from "../../../lib/db/db";
-import { ProductsModel } from "../../../lib/db/model/products";
 import { NextRequest } from "next/server";
 
-export async function GET(request: NextRequest, {}) {
+export async function GET(request: NextRequest, { }) {
   await connectDB();
   const query = request.nextUrl.searchParams.get("query");
   const page = Number(request.nextUrl.searchParams.get("page")) || 1;
@@ -17,8 +17,8 @@ export async function GET(request: NextRequest, {}) {
   }
 
   console.log(searchQuery);
-  const total = await ProductsModel.countDocuments(searchQuery);
-  const docs = await ProductsModel.find(searchQuery).skip(skip).limit(limit);
+  const total = await ProductModel.countDocuments(searchQuery);
+  const docs = await ProductModel.find(searchQuery).skip(skip).limit(limit);
 
   console.log(total);
   return Response.json({ total: total, products: docs });

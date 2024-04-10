@@ -37,26 +37,23 @@ export async function GET() {
 
 export async function DELETE(req: NextRequest) {
     await connectDB();
-    const  productId  = await req.json();
+    const productId = await req.json();
     try {
-        console.log("delete",  productId )
-
-        
-        if (productId > 0) {
+        if (productId.productId > 0) {
             var productno = 0
             productno = productId.productId
-            console.log("withid",  productno );
-            CartModel.deleteOne({ productId: { $gte: productno } }).then(function(){
+            console.log("withid", productno);
+            CartModel.deleteOne({ productId: { $gte: productno } }).then(function () {
                 console.log("Data deleted"); // Success
-            }).catch(function(error){
+            }).catch(function (error) {
                 console.log(error); // Failure
             });
 
             return Response.json({
                 message: "deleted"
             });
-        }else{
-            console.log("without",  productId )
+        } else {
+            console.log("without", productId)
             CartModel.collection.drop()
             return Response.json({
                 message: "deleted"

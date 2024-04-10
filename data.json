@@ -1,0 +1,142 @@
+[
+  {
+    "productId": 1,
+    "brandName": "TechGuru",
+    "productName": "SmartDesk Pro",
+    "productDescription": "An ergonomic standing desk with motorized height adjustment and built-in cable management.",
+    "productPrice": 499.99
+  },
+  {
+    "productId": 2,
+    "brandName": "BioFresh",
+    "productName": "Organic Facial Moisturizer",
+    "productDescription": "A nourishing moisturizer made from natural ingredients, suitable for all skin types.",
+    "productPrice": 29.99
+  },
+  {
+    "productId": 3,
+    "brandName": "BlazeFit",
+    "productName": "Fitness Tracker Watch",
+    "productDescription": "A sleek watch with heart rate monitoring, activity tracking, and GPS capabilities for fitness enthusiasts.",
+    "productPrice": 89.99
+  },
+  {
+    "productId": 4,
+    "brandName": "GreenCuisine",
+    "productName": "Stainless Steel Water Bottle",
+    "productDescription": "A durable and eco-friendly water bottle made from stainless steel, perfect for staying hydrated on the go.",
+    "productPrice": 19.99
+  },
+  {
+    "productId": 5,
+    "brandName": "ZenTech",
+    "productName": "Meditation Cushion Set",
+    "productDescription": "A set of meditation cushions filled with organic buckwheat hulls, promoting comfort and proper posture during meditation practice.",
+    "productPrice": 49.99
+  },
+  {
+    "productId": 6,
+    "brandName": "FitFusion",
+    "productName": "Resistance Band Set",
+    "productDescription": "A set of high-quality resistance bands with varying resistance levels for strength training and rehabilitation exercises.",
+    "productPrice": 34.99
+  },
+  {
+    "productId": 7,
+    "brandName": "EcoEats",
+    "productName": "Bamboo Cutting Board",
+    "productDescription": "A durable cutting board made from renewable bamboo, featuring a juice groove for mess-free food preparation.",
+    "productPrice": 24.99
+  },
+  {
+    "productId": 8,
+    "brandName": "SolarSolutions",
+    "productName": "Portable Solar Charger",
+    "productDescription": "A compact solar charger with USB ports, perfect for charging smartphones and other devices outdoors.",
+    "productPrice": 39.99
+  },
+  {
+    "productId": 9,
+    "brandName": "SleepWell",
+    "productName": "Memory Foam Pillow",
+    "productDescription": "A contoured memory foam pillow that adapts to your sleeping position, providing optimal support and comfort.",
+    "productPrice": 49.99
+  },
+  {
+    "productId": 10,
+    "brandName": "HomeGuard",
+    "productName": "Wireless Home Security Camera",
+    "productDescription": "A weatherproof security camera with motion detection and night vision, ensuring peace of mind for homeowners.",
+    "productPrice": 79.99
+  },
+  {
+    "productId": 11,
+    "brandName": "FreshHarvest",
+    "productName": "Cold Press Juicer",
+    "productDescription": "A versatile juicer that extracts nutrient-rich juice from fruits and vegetables using a gentle cold-press process.",
+    "productPrice": 149.99
+  },
+  {
+    "productId": 12,
+    "brandName": "EcoFusion",
+    "productName": "Reusable Silicone Food Storage Bags",
+    "productDescription": "A set of eco-friendly food storage bags made from durable silicone, ideal for storing snacks, sandwiches, and leftovers.",
+    "productPrice": 19.99
+  },
+  {
+    "productId": 13,
+    "brandName": "CleanAir",
+    "productName": "HEPA Air Purifier",
+    "productDescription": "A compact air purifier with HEPA filtration, removing allergens, dust, and pollutants from indoor air for cleaner and fresher breathing.",
+    "productPrice": 129.99
+  },
+  {
+    "productId": 14,
+    "brandName": "FitTech",
+    "productName": "Smart Yoga Mat",
+    "productDescription": "A yoga mat embedded with sensors that track alignment and balance during yoga practice, providing real-time feedback via a companion app.",
+    "productPrice": 99.99
+  },
+  {
+    "productId": 15,
+    "brandName": "TerraGrow",
+    "productName": "Indoor Herb Garden Kit",
+    "productDescription": "A complete kit for growing herbs indoors, including pots, seeds, soil, and instructions for cultivating fresh herbs year-round.",
+    "productPrice": 39.99
+  },
+  {
+    "productId": 16,
+    "brandName": "EcoTrend",
+    "productName": "Bamboo Toothbrush Set",
+    "productDescription": "A set of biodegradable toothbrushes made from sustainable bamboo, featuring soft bristles for gentle yet effective oral care.",
+    "productPrice": 9.99
+  },
+  {
+    "productId": 17,
+    "brandName": "PetComfort",
+    "productName": "Self-Cleaning Litter Box",
+    "productDescription": "A self-cleaning litter box that automatically scoops and disposes of cat waste, reducing odor and minimizing maintenance for pet owners.",
+    "productPrice": 129.99
+  },
+  {
+    "productId": 18,
+    "brandName": "AquaTech",
+    "productName": "Waterproof Bluetooth Speaker",
+    "productDescription": "A rugged Bluetooth speaker designed to withstand water, sand, and shock, making it perfect for outdoor adventures and poolside parties.",
+    "productPrice": 59.99
+  },
+  {
+    "productId": 19,
+    "brandName": "EcoLiving",
+    "productName": "Beeswax Food Wraps",
+    "productDescription": "A set of eco-friendly food wraps made from beeswax-infused cotton fabric, providing a sustainable alternative to plastic cling film for food storage.",
+    "productPrice": 14.99
+  },
+  {
+    "productId": 20,
+    "brandName": "ComfyPets",
+    "productName": "Orthopedic Pet Bed",
+    "productDescription": "An orthopedic pet bed with memory foam cushioning, offering support and comfort for dogs and cats with joint pain or arthritis.",
+    "productPrice": 39.99
+  }
+]

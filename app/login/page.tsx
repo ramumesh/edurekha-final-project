@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-
+import loginImage from "../../lib/assets/images/login.jpg";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -29,10 +29,7 @@ export default function LoginPage() {
         setErrMessage("Invalid Credentials");
       }
     } catch (error) {
-      
-        setErrMessage("Invalid Credentials");
-      
-
+      setErrMessage("Invalid Credentials");
     }
   }
 
@@ -44,10 +41,11 @@ export default function LoginPage() {
             <div className="h-32 md:h-auto md:w-1/2">
               <Image
                 className="object-cover w-full h-full"
-                src="/login_image.jpg"
+                src={loginImage}
                 alt="Image Alt Text"
                 priority={true}
-                width={500} height={500}
+                width={500}
+                height={500}
               />
             </div>
             <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
@@ -112,4 +110,3 @@ export default function LoginPage() {
     </main>
   );
 }
-

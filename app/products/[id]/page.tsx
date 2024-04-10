@@ -1,11 +1,11 @@
-"use client"
-import React, { useEffect, useState } from 'react'
-import Image from 'next/image'
-import { useRouter } from 'next/navigation';
-import { useAppDispatch } from '@/lib/hooks/redux';
-import { addToCart } from '@/lib/store/slices/cart';
-import { ToastContainer, toast } from 'react-toastify';
-import loginImg from "../../../lib/assets/images/dfimg.jpg";
+"use client";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/lib/hooks/redux";
+import { addToCart } from "@/lib/store/slices/cart";
+import { ToastContainer, toast } from "react-toastify";
+import productImage from "../../../lib/assets/images/packing-product-icon.webp";
 import "react-toastify/dist/ReactToastify.css";
 
 interface IProductDetProps {
@@ -22,12 +22,11 @@ interface IProduct {
 }
 
 const ProductDetails: React.FC<IProductDetProps> = ({ params }) => {
-
   const router = useRouter();
   const [products, setProducts] = useState<IProduct[]>([]);
   const dispatch = useAppDispatch();
 
-  console.log("params", params)
+  console.log("params", params);
 
   useEffect(() => {
     const getProducts = async (searchId: number) => {
@@ -63,34 +62,32 @@ const ProductDetails: React.FC<IProductDetProps> = ({ params }) => {
           body: JSON.stringify({ product }),
         });
         const data = await response.json();
-        if (data.message === "added to cart") { }
+        if (data.message === "added to cart") {
+        }
         toast("Added to cart successfully", {
           type: "success",
           theme: "dark",
           autoClose: 2000,
         });
-      }
-      catch (error) {
+      } catch (error) {
+        alert(error);
         toast("Please try again later", {
           type: "error",
           theme: "dark",
           autoClose: 2000,
         });
-
       }
-
-    }else{
+    } else {
       toast("Please try again later", {
         type: "error",
         theme: "dark",
         autoClose: 2000,
       });
     }
-  }
+  };
 
   const addToCartClient = () => {
     if (products) {
-
       dispatch(addToCart(products));
       toast("Added to cart successfully", {
         type: "success",
@@ -100,35 +97,46 @@ const ProductDetails: React.FC<IProductDetProps> = ({ params }) => {
     }
   };
 
-
-
   return (
     <main>
       <div className="container mx-auto mt-10">
         <div className="flex flex-col md:flex-row">
           <div className="md:flex-shrink-0">
-            <Image className="rounded-lg md:w-56" width={400} height={300} src={loginImg} alt="Product Name" />
+            <Image
+              className="rounded-lg md:w-56"
+              width={400}
+              height={300}
+              src={productImage}
+              alt="Product Name"
+            />
           </div>
           <div className="mt-4 md:mt-0 md:ml-6">
-            <h1 className="text-xl font-bold text-gray-900">{products[0]?.productName}</h1>
-            <p className="mt-2 text-gray-600">{products[0]?.productDescription}</p>
+            <h1 className="text-xl font-bold text-gray-900">
+              {products[0]?.productName}
+            </h1>
+            <p className="mt-2 text-gray-900">
+              {products[0]?.productDescription}
+            </p>
             <div className="mt-3">
-              <span className="text-gray-500">Price:</span>
-              <span className="ml-1 text-gray-900 font-bold">£{products[0]?.productPrice}</span>
+              <span className="text-gray-900">Price:</span>
+              <span className="ml-1 text-gray-900 font-bold">
+                €{products[0]?.productPrice}
+              </span>
             </div>
             <div className="mt-6">
-              <button className="px-8 py-2 bg-blue-500 text-white text-sm font-medium rounded hover:bg-blue-700"
-                onClick={addProductToCart}>Add to Cart</button>
+              <button
+                className="px-8 py-2 bg-green-600 text-black text-sm font-medium rounded hover:bg-gray-100"
+                onClick={addProductToCart}
+              >
+                Add to Cart
+              </button>
             </div>
           </div>
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </main>
-
-  )
-
-}
-
+  );
+};
 
 export default ProductDetails;

@@ -1,13 +1,12 @@
-"use client"
-import React, { useState } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import login from '../login/page'
-import { useRouter } from 'next/navigation'
+"use client";
+import React, { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import login from "../login/page";
+import { useRouter } from "next/navigation";
 
 const page = () => {
-
-    const [name, setName] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -25,15 +24,15 @@ const page = () => {
         });
         const json = await response.json();
         console.log(json);
-        if(json && json.message === "user registered"){
+        if (json && json.message === "user registered") {
           router.push("/login");
-        }else{
+        } else {
           setErrMessage("Invalid Credentials");
         }
-      }else{
+      } else {
         setErrMessage("Password Mismatch");
       }
-    } catch (error) { }
+    } catch (error) {}
     if (email === "asc@gmail.com" && password === "pwd") {
       router.push("/home");
       setErrMessage("");
@@ -43,21 +42,30 @@ const page = () => {
   }
 
   return (
-    <div><div className="flex items-center min-h-screen bg-gray-100">
-    <div className="flex-1 h-full max-w-4xl mx-auto bg-white rounded-lg shadow-xl">
-        <div className="flex flex-col md:flex-row">
+    <div>
+      <div className="flex items-center min-h-screen bg-gray-100">
+        <div className="flex-1 h-full max-w-4xl mx-auto bg-white rounded-lg shadow-xl">
+          <div className="flex flex-col md:flex-row">
             <div className="h-32 md:h-auto md:w-1/2">
-                <Image className="object-cover w-full h-full" width={500} height={500} src="/login_image.jpg" alt="Register" />
+              <Image
+                className="object-cover w-full h-full"
+                width={500}
+                height={500}
+                src="/login_image.jpg"
+                alt="Register"
+              />
             </div>
             <div className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
-                <div className="w-full">
-                    <h1 className="mb-4 text-2xl font-bold text-center text-gray-700">Create Your Account</h1>
-                    <form onSubmit={doRegister}>
+              <div className="w-full">
+                <h1 className="mb-4 text-2xl font-bold text-center text-gray-700">
+                  Create Your Account
+                </h1>
+                <form onSubmit={doRegister}>
                   <div>
                     <label className="block text-sm">Name</label>
                     <input
                       type="text"
-                      className="block w-full mt-1 text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                      className="block w-full mt-1 text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-900"
                       placeholder="John Doe"
                       onChange={(e) => {
                         console.log(e.target.value);
@@ -70,7 +78,7 @@ const page = () => {
                     <label className="block text-sm">Email</label>
                     <input
                       type="email"
-                      className="block w-full mt-1 text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                      className="block w-full mt-1 text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-900"
                       placeholder="name@example.com"
                       onChange={(e) => {
                         console.log(e.target.value);
@@ -118,16 +126,22 @@ const page = () => {
                   </div>
                 </form>
 
-                    <p className="mt-4 text-xs text-center text-gray-600">
-                        Already have an account? <Link href={'/login'} className="text-indigo-600 hover:underline">Login here</Link>
-                    </p>
-                </div>
+                <p className="mt-4 text-xs text-center text-gray-600">
+                  Already have an account?{" "}
+                  <Link
+                    href={"/login"}
+                    className="text-indigo-600 hover:underline"
+                  >
+                    Login here
+                  </Link>
+                </p>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
-</div>
-  )
-}
+  );
+};
 
-export default page
+export default page;
