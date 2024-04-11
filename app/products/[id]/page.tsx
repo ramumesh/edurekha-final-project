@@ -1,9 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useAppDispatch } from "@/lib/hooks/redux";
-import { addToCart } from "@/lib/store/slices/cart";
 import { ToastContainer, toast } from "react-toastify";
 import productImage from "../../../lib/assets/images/packing-product-icon.webp";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,22 +20,14 @@ interface IProduct {
 }
 
 const ProductDetails: React.FC<IProductDetProps> = ({ params }) => {
-  const router = useRouter();
   const [products, setProducts] = useState<IProduct[]>([]);
-  const dispatch = useAppDispatch();
-
-  console.log("params", params);
-
   useEffect(() => {
     const getProducts = async (searchId: number) => {
       try {
         const response = await fetch(
           `/api/products/prodId?${searchId > 0 ? `query=${searchId}` : 0}`
         );
-
-        console.log(response);
         const resp = await response.json();
-        console.log(resp);
         setProducts(resp);
       } catch {
         console.log("err");
@@ -45,7 +35,6 @@ const ProductDetails: React.FC<IProductDetProps> = ({ params }) => {
     };
 
     const numericValue: number = Number(params.id);
-
     if (numericValue > 0) {
       getProducts(numericValue);
     } else {
@@ -58,7 +47,7 @@ const ProductDetails: React.FC<IProductDetProps> = ({ params }) => {
     if (product) {
       try {
         const response = await fetch("http://localhost:3000/api/cart", {
-          method: "PUT",
+          method: "POST",
           body: JSON.stringify({ product }),
         });
         const data = await response.json();
@@ -67,36 +56,24 @@ const ProductDetails: React.FC<IProductDetProps> = ({ params }) => {
         toast("Added to cart successfully", {
           type: "success",
           theme: "dark",
-          autoClose: 2000,
+          autoClose: 1000,
         });
       } catch (error) {
         alert(error);
         toast("Please try again later", {
           type: "error",
           theme: "dark",
-          autoClose: 2000,
+          autoClose: 1000,
         });
       }
     } else {
       toast("Please try again later", {
         type: "error",
         theme: "dark",
-        autoClose: 2000,
+        autoClose: 1000,
       });
     }
   };
-
-  const addToCartClient = () => {
-    if (products) {
-      dispatch(addToCart(products));
-      toast("Added to cart successfully", {
-        type: "success",
-        theme: "dark",
-        autoClose: 2000,
-      });
-    }
-  };
-
   return (
     <main>
       <div className="container mx-auto mt-10">

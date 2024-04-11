@@ -3,10 +3,10 @@
 import { useEffect, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { Input } from "antd";
-import { useAppDispatch } from "../../lib/hooks/redux";
 import productImage from "../../lib/assets/images/packing-product-icon.webp";
 import Image from "next/image";
 import Link from "next/link";
+import { useDebouncedCallback } from "use-debounce";
 
 interface Product {
   _id: string;
@@ -20,46 +20,24 @@ interface Product {
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [searchText, setSearchText] = useState("");
-  const [totalItems, setTotalItem] = useState(0);
-  const [selectedPage, setSelectedPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const [items, setItems] = useState([]);
-
-  const dispatch = useAppDispatch();
-
-  //   async function fetchProducts() {
-  //     try {
-  //       const res = await fetch("/api/products");
-  //       // if (!res.ok) {
-  //       //   throw new Error("Failed to fetch products");
-  //       // }
-  //       const data = await res.json();
-  //       setProducts(data);
-  //       setItems(data);
-  //       dispatch(productItems(data));
-  //       setTotalItem(data.length);
-  //       let tTotal = data.length;
-  //       setTotalPages(Math.ceil(tTotal / 50));
-  //       console.log(data);
-  //     } catch (error) {
-  //       console.error("Error fetching products:", error);
-  //       // Handle error appropriately, e.g., set an error state
-  //     }
-  //   }
+  const debounced = useDebouncedCallback(
+    () => {
+      if (searchText !== "") {
+        fetchProducts(searchText);
+      } else {
+        fetchProducts();
+      }
+    },
+    500,
+    { maxWait: 2000 }
+  );
 
   useEffect(() => {
     fetchProducts();
   }, []);
 
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      if (searchText !== "") {
-        fetchProducts(searchText);
-      } else {
-        fetchProducts();
-      }
-    }, 200); // Adjust the delay as per your requirement
-    return () => clearTimeout(delayDebounceFn);
+    debounced();
   }, [searchText]);
 
   async function fetchProducts(query?: string) {
@@ -71,11 +49,6 @@ export default function ProductsPage() {
       }
       const data = await res.json();
       setProducts(data);
-      setItems(data);
-      // dispatch(productItems(data));
-      setTotalItem(data.length);
-      let tTotal = data.length;
-      setTotalPages(Math.ceil(tTotal / 50));
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -120,9 +93,6 @@ export default function ProductsPage() {
                     {e.productName}
                   </h2>
                   <h1 className="text-gray-600 ml-auto">{e.brandName}</h1>
-                  {/* <p className="text-gray-600 ml-auto">
-                        {e.productDescription}
-                      </p> */}
                   <div>
                     <span className="text-gray-600 ml-auto">
                       Price : €{e.productPrice}

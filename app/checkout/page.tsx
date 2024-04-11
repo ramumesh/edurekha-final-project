@@ -19,7 +19,7 @@ const CheckoutPage = () => {
         var totalTemp = 0;
         resp.map((carttemp: ICart) => {
           // console.log("array ", carttemp);
-          totalTemp = totalTemp + carttemp.productPrice;
+          totalTemp = totalTemp + carttemp.productPrice * carttemp.quantity;
         });
 
         setTotal(totalTemp);
@@ -38,7 +38,7 @@ const CheckoutPage = () => {
     if (total > 0) {
       const order = {} as IOrder;
       const products = new Array() as [Iproducts];
-      item.map((product) => {
+      item.forEach((product) => {
         const productItem: Iproducts = {
           productName: product.productName,
           price: product.productPrice,
@@ -73,6 +73,20 @@ const CheckoutPage = () => {
       } catch {
         console.log("err");
       }
+    }
+  }
+  async function removeCartItems() {
+    try {
+      const response = await fetch(`/api/cart`, {
+        method: "DELETE",
+        body: JSON.stringify({ sample: "sample" }),
+      });
+
+      const resp = await response.json();
+      console.log("delete clicked", resp);
+      router.push("/orders");
+    } catch {
+      console.log("err");
     }
   }
 
@@ -141,7 +155,10 @@ const CheckoutPage = () => {
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
-                onClick={navigateToOrderPage}
+                onClick={(e) => {
+                  navigateToOrderPage(e);
+                  removeCartItems();
+                }}
               >
                 Place Order
               </button>

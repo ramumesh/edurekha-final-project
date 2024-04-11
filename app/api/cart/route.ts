@@ -8,6 +8,14 @@ export async function PUT(req: NextRequest) {
     const { product } = await req.json();
     try {
         await connectDB();
+        const existingItem = await CartModel.findOne({ productId: product.productId });
+        console.log("ExistingItem", existingItem);
+        if (existingItem) {
+            await CartModel.updateOne({ productId: product.productId }, { $set: { quantity: product.quantity } });
+            return Response.json({
+                message: "Cart updated"
+            });
+        }
         const newCart = new CartModel({ productId: product.productId, brandName: product.brandName, productName: product.productName, productPrice: product.productPrice, quantity: 1 });
         const cart = await newCart.save();
         return Response.json({
@@ -18,8 +26,33 @@ export async function PUT(req: NextRequest) {
             message: error
         });
     }
-
 }
+export async function POST(req: NextRequest) {
+    const { product } = await req.json();
+    try {
+        await connectDB();
+        const existingItem = await CartModel.findOne({ productId: product.productId });
+        console.log("ExistingItem", existingItem);
+        if (existingItem) {
+            await CartModel.updateOne({ productId: product.productId }, { $set: { quantity: existingItem.quantity + 1 } });
+            return Response.json({
+                message: "Cart updated"
+            });
+        }
+        const newCart = new CartModel({ productId: product.productId, brandName: product.brandName, productName: product.productName, productPrice: product.productPrice, quantity: 1 });
+        const cart = await newCart.save();
+        return Response.json({
+            message: "added to cart"
+        });
+    } catch (error) {
+        return Response.json({
+            message: error
+        });
+    }
+}
+
+
+
 
 export async function GET() {
 
