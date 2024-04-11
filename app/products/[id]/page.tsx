@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { useAppDispatch } from "@/lib/hooks/redux";
 import { ToastContainer, toast } from "react-toastify";
 import productImage from "../../../lib/assets/images/packing-product-icon.webp";
 import "react-toastify/dist/ReactToastify.css";
