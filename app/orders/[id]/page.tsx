@@ -1,6 +1,7 @@
 const OrderDetails = async (params: any) => {
   const response = await fetch(
-    `http://localhost:3000/api/order/orderId?query=${params.params.id}`
+    `http://localhost:3000/api/order/${params.params.id}`,
+    { cache: "no-store" }
   );
   const orders = await response.json();
 

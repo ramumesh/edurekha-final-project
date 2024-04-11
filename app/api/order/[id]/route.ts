@@ -2,12 +2,11 @@ import { OrderModel } from "@/lib/db/model/order";
 import connectDB from "../../../../lib/db/db";
 import { NextRequest } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(__: NextRequest, { params }: any) {
     try {
         await connectDB();
-        const param = req.nextUrl.searchParams.get("query");
         const order = await OrderModel.find({
-            orderId: param,
+            orderId: params.id,
         });
         return Response.json(order);
     } catch (error) {
