@@ -15,12 +15,10 @@ export async function PUT(req: NextRequest) {
             return Response.json({
                 message: "Cart updated"
             });
+        } else {
+            throw new Error("Product not existing")
         }
-        const newCart = new CartModel({ productId: product.productId, brandName: product.brandName, productName: product.productName, productPrice: product.productPrice, quantity: 1 });
-        const cart = await newCart.save();
-        return Response.json({
-            message: "added to cart"
-        });
+
     } catch (error) {
         return Response.json({
             message: error
@@ -39,8 +37,8 @@ export async function POST(req: NextRequest) {
                 message: "Cart updated"
             });
         }
-        const newCart = new CartModel({ productId: product.productId, brandName: product.brandName, productName: product.productName, productPrice: product.productPrice, quantity: 1 });
-        const cart = await newCart.save();
+        const newCart = new CartModel({ userId: product.userId, productId: product.productId, brandName: product.brandName, productName: product.productName, productPrice: product.productPrice, quantity: 1 });
+        await newCart.save();
         return Response.json({
             message: "added to cart"
         });
@@ -54,11 +52,11 @@ export async function POST(req: NextRequest) {
 
 
 
-export async function GET() {
-
+export async function GET(req: NextRequest) {
+    const userId = req.nextUrl.searchParams.get("userId");
     try {
         await connectDB();
-        const carts = await CartModel.find();
+        const carts = await CartModel.find({ userId: userId });
         return Response.json(carts);
     } catch (error) {
         console.error("Error fetching products:", error);
@@ -70,29 +68,30 @@ export async function GET() {
 
 export async function DELETE(req: NextRequest) {
     await connectDB();
-    const productId = await req.json();
+    const reqBody = await req.json();
+    const { productId, userId } = reqBody;
+    console.log(reqBody);
     try {
-        if (productId.productId > 0) {
-            var productno = 0
-            productno = productId.productId
-            console.log("withid", productno);
-            CartModel.deleteOne({ productId: { $gte: productno } }).then(function () {
+        if (productId && userId) {
+            console.log("withid", productId);
+            CartModel.deleteOne({ productId: productId, userId: userId }).then(function () {
                 console.log("Data deleted"); // Success
             }).catch(function (error) {
                 console.log(error); // Failure
             });
-
             return Response.json({
                 message: "deleted"
             });
         } else {
-            console.log("without", productId)
-            CartModel.collection.drop()
+            CartModel.deleteMany({ userId: userId }).then(function () {
+                console.log("Data deleted"); // Success
+            }).catch(function (error) {
+                console.log(error); // Failure
+            });
             return Response.json({
                 message: "deleted"
             });
         }
-
     } catch (error) {
         return Response.json({
             message: error

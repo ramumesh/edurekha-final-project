@@ -1,6 +1,17 @@
-const ordersPage = async () => {
-  const response = await fetch(`http://localhost:3000/api/order`);
-  const orders = await response.json();
+"use client";
+import React, { useEffect, useState } from "react";
+import { getOrders } from "../services/orderServices";
+
+const ordersPage = () => {
+  const [orders, setOrders] = useState<IOrder[]>([]);
+  useEffect(() => {
+    async function getAllOrders() {
+      const response = await getOrders();
+      const orders = await response.json();
+      setOrders(orders);
+    }
+    getAllOrders();
+  }, []);
   return (
     <div className="container mx-auto mt-10">
       <div className="bg-white shadow-md rounded my-6">

@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import loginImg from "@/lib/assets/images/dfimg.jpg";
-import { ToastContainer, toast } from "react-toastify";
+import { getCart, putCart, removeCart } from "../services/cartServices";
+import { ICart } from "@/lib/interfaces/ICart";
 
 const CartPage = () => {
   const router = useRouter();
@@ -14,10 +15,7 @@ const CartPage = () => {
     const updatedCartProducts: ICart[] = cartProducts.map((cartItem) => {
       if (cartItem?.productId === id) {
         const updateCartProduct = { ...cartItem, quantity: +value };
-        fetch(`/api/cart`, {
-          method: "UPDATE",
-          body: JSON.stringify({ product: updateCartProduct }),
-        }).then((res) => {
+        putCart(updateCartProduct).then((res) => {
           console.log(res);
         });
         return updateCartProduct;
@@ -35,9 +33,9 @@ const CartPage = () => {
     });
     setTotal(totalTemp);
   };
-  const getProducts = async () => {
+  const getCartProducts = async () => {
     try {
-      const response = await fetch(`/api/cart`);
+      const response = await getCart();
       const resp = await response.json();
       setCartProducts(resp);
       calculateTotal(resp);
@@ -47,26 +45,18 @@ const CartPage = () => {
   };
 
   useEffect(() => {
-    getProducts();
+    getCartProducts();
   }, []);
 
   async function removeCartItem(e: any, productId: any) {
     e.preventDefault();
     try {
-      const response = await fetch(`/api/cart`, {
-        method: "DELETE",
-        body: JSON.stringify({ productId }),
-      });
-
+      alert(productId);
+      const response = await removeCart(productId);
       const resp = await response.json();
       if (resp.message === "deleted") {
-        toast("Removed from cart successfully", {
-          type: "success",
-          theme: "dark",
-          autoClose: 1000,
-        });
       }
-      getProducts();
+      getCartProducts();
     } catch {
       console.log("err");
     }
@@ -208,7 +198,6 @@ const CartPage = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </main>
   );
 };

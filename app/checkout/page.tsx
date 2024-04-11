@@ -1,6 +1,9 @@
 "use client";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { getCart, removeCart } from "../services/cartServices";
+import { ICart } from "@/lib/interfaces/ICart";
+import { postOrder } from "../services/orderServices";
 
 const CheckoutPage = () => {
   const router = useRouter();
@@ -13,7 +16,7 @@ const CheckoutPage = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const response = await fetch(`/api/cart`);
+        const response = await getCart();
         const resp = await response.json();
         // const array : ICart[] = []
         var totalTemp = 0;
@@ -58,11 +61,7 @@ const CheckoutPage = () => {
 
       try {
         console.log("order creation called", order);
-        const response = await fetch(`/api/order`, {
-          method: "PUT",
-          body: JSON.stringify({ order }),
-        });
-
+        const response = await postOrder(order);
         const resp = await response.json();
         console.log("order confirmed", resp);
 
@@ -77,11 +76,7 @@ const CheckoutPage = () => {
   }
   async function removeCartItems() {
     try {
-      const response = await fetch(`/api/cart`, {
-        method: "DELETE",
-        body: JSON.stringify({ sample: "sample" }),
-      });
-
+      const response = await removeCart();
       const resp = await response.json();
       console.log("delete clicked", resp);
       router.push("/orders");

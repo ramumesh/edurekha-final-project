@@ -5,7 +5,7 @@ export async function middleware(request: NextRequest) {
   try {
     const token = request.cookies.get("token")?.value;
     const isLoggedIn = token && (await verifyjwt(token));
-
+    console.log("isLo", isLoggedIn);
     if (isLoggedIn) {
       return NextResponse.next();
     } else {
@@ -17,5 +17,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/home", "/products" , "/orders", "/checkout", "/cart"]
+  matcher: ["/", "/home", "/products", "/orders", "/checkout", "/cart"]
 };

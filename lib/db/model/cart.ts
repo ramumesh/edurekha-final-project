@@ -6,6 +6,7 @@ const CartSchema = new Schema({
   productName: { type: String },
   productPrice: { type: Number },
   quantity: { type: Number },
+  userId: { type: String }
 });
 
 const CartModel =

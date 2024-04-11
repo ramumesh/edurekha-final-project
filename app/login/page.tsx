@@ -22,6 +22,7 @@ export default function LoginPage() {
       console.log("login message", json.message);
       if (json?.message === "user logged in") {
         console.log("correct", json.message);
+        sessionStorage.setItem("userId", json.userId);
         e.preventDefault();
         router.push("/home");
       } else {

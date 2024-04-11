@@ -1,46 +1,42 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 import connectDB from "../../../lib/db/db";
 import { OrderModel } from "@/lib/db/model/order";
+import { verifyjwt } from "@/lib/verifytoken";
 
 
-export async function PUT(req: NextRequest, res: NextResponse) {
-
-    const { order } = await req.json();
+export async function POST(req: NextRequest) {
+    const { order, userId } = await req.json();
     try {
         await connectDB();
-        console.log("before...........");
-        const newOrder = new OrderModel({ orderId: order.orderId, date: order.date, name: order.name, email: order.email, 
-            address: order.address, total: order.total,products : order.products 
-         });
-        const cart = await newOrder.save();
-    
-        
-            
-            return Response.json({
-                message: "order created"
-            });
-        
+        const newOrder = new OrderModel({
+            orderId: order.orderId, date: order.date, name: order.name, email: order.email,
+            address: order.address, total: order.total, products: order.products, userId: userId
+        });
+        const createdOrder = await newOrder.save();
+        return Response.json({
+            message: "order created",
+            order: createdOrder
+        });
+
     } catch (error) {
-        console.log("here2...........",error); // Failure
+        console.log("here2...........", error); // Failure
         return Response.json({
             message: error
         });
     }
-
 }
 
-export async function GET() {
-
+export async function GET(req: NextRequest) {
+    const token = req.cookies.get("token")?.value;
+    const data: any = token && (await verifyjwt(token));
     try {
         await connectDB();
-        const carts = await OrderModel.find();
-        console.log("order data ",carts);
-        return Response.json(carts);
+        const orders = await OrderModel.find({ userId: data.payload.id });
+        return Response.json(orders);
     } catch (error) {
-        console.error("Error fetching products:", error);
-        Response.json({ error: "Internal Server Erro" });
+        Response.json({ error: JSON.stringify(error) });
     }
-
 }
+
 
 

@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useDebouncedCallback } from "use-debounce";
 
-interface Product {
+export interface Product {
   _id: string;
   productId: number;
   brandName: string;

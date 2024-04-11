@@ -1,6 +1,6 @@
 
 import bcryptjs from "bcryptjs"
-import { SignJWT } from "jose"
+import { SignJWT, decodeJwt } from "jose"
 import { NextRequest } from "next/server";
 import { UserModel } from "../../../lib/db/model/users";
 import connectDB from "../../../lib/db/db";
@@ -15,8 +15,8 @@ export async function POST(req: NextRequest) {
 
         await connectDB()
 
-        const user  = await UserModel.findOne({ email });
-        const { password : hashedPassword, _id } = user
+        const user = await UserModel.findOne({ email });
+        const { password: hashedPassword, _id } = user
 
         if (password && hashedPassword && bcryptjs.compareSync(password, hashedPassword)) {
 
@@ -29,6 +29,7 @@ export async function POST(req: NextRequest) {
             return Response.json({
                 message: "user logged in",
                 token: token,
+                userId: _id
             },
                 {
                     headers: {

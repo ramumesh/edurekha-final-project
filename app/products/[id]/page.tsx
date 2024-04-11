@@ -5,6 +5,7 @@ import { useAppDispatch } from "@/lib/hooks/redux";
 import { ToastContainer, toast } from "react-toastify";
 import productImage from "../../../lib/assets/images/packing-product-icon.webp";
 import "react-toastify/dist/ReactToastify.css";
+import { postCart } from "@/app/services/cartServices";
 
 interface IProductDetProps {
   params: { id: string };
@@ -46,18 +47,15 @@ const ProductDetails: React.FC<IProductDetProps> = ({ params }) => {
     const product = products[0];
     if (product) {
       try {
-        const response = await fetch("http://localhost:3000/api/cart", {
-          method: "POST",
-          body: JSON.stringify({ product }),
-        });
+        const response = await postCart(product);
         const data = await response.json();
         if (data.message === "added to cart") {
+          toast("Added to cart successfully", {
+            type: "success",
+            theme: "dark",
+            autoClose: 1000,
+          });
         }
-        toast("Added to cart successfully", {
-          type: "success",
-          theme: "dark",
-          autoClose: 1000,
-        });
       } catch (error) {
         alert(error);
         toast("Please try again later", {
