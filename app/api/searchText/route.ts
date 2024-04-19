@@ -6,7 +6,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest, res: NextResponse) {
   try {
     await connectDB();
-
     const query = req.nextUrl.searchParams.get("query");
     console.log("ksd" + query);
     const products = await ProductModel.find({

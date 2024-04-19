@@ -1,8 +1,7 @@
-const OrderDetails = async (params: any) => {
-  const response = await fetch(
-    `http://localhost:3000/api/order/${params.params.id}`,
-    { cache: "no-store" }
-  );
+const OrderDetails = async ({ params }: { params: { id: number } }) => {
+  const response = await fetch(`http://localhost:3000/api/order/${params.id}`, {
+    cache: "no-store",
+  });
   const orders = await response.json();
 
   return (
@@ -43,31 +42,29 @@ const OrderDetails = async (params: any) => {
                 </th>
               </tr>
             </thead>
-            {orders[0]?.products?.map((product: any) => {
-              return (
-                <>
-                  <tbody>
-                    <tr>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <div className="flex items-center">
-                          <div className="ml-3">
-                            <p className="text-gray-900 whitespace-no-wrap">
-                              {product.productName}
-                            </p>
-                          </div>
+            <tbody>
+              {orders[0]?.products?.map((product: any) => {
+                return (
+                  <tr key={product.id}>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      <div className="flex items-center">
+                        <div className="ml-3">
+                          <p className="text-gray-900 whitespace-no-wrap">
+                            {product.productName}
+                          </p>
                         </div>
-                      </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        {product.quantity}
-                      </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        €{product.price}
-                      </td>
-                    </tr>
-                  </tbody>
-                </>
-              );
-            })}
+                      </div>
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      {product.quantity}
+                    </td>
+                    <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                      €{product.price}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
         </div>
         <div className="flex justify-end items-center">

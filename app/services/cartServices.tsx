@@ -1,5 +1,5 @@
 import { ICart } from "@/lib/interfaces/ICart";
-import { Product } from "../products/page";
+import { IProduct } from "@/lib/interfaces/IProduct";
 
 const URL = "/api/cart";
 export const getCart = async () => {
@@ -13,7 +13,7 @@ export const putCart = (product: ICart) => {
   });
 };
 
-export const postCart = async (product: Product) => {
+export const postCart = async (product: IProduct) => {
   return fetch(URL, {
     method: "POST",
     body: JSON.stringify({
