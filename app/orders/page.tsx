@@ -1,17 +1,15 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { getOrders } from "../services/orderServices";
+import { verifyjwt } from "@/lib/verifytoken";
+import { cookies } from "next/headers";
 
-const ordersPage = () => {
-  const [orders, setOrders] = useState<IOrder[]>([]);
-  useEffect(() => {
-    async function getAllOrders() {
-      const response = await getOrders();
-      const orders = await response.json();
-      setOrders(orders);
-    }
-    getAllOrders();
-  }, []);
+const ordersPage = async () => {
+  const cookieStore = cookies();
+  const token = cookieStore.get("token");
+  const tokenPayload: any = token?.value && (await verifyjwt(token.value));
+  const userId = tokenPayload?.payload?.id;
+  const response = await fetch(
+    `http://localhost:3000/api/order?userId=${userId}`
+  );
+  const orders = await response.json();
   return (
     <div className="container mx-auto mt-10">
       <div className="bg-white shadow-md rounded my-6">
@@ -49,7 +47,7 @@ const ordersPage = () => {
                     €{`${orderItem.total}`}
                   </td>
                   <td className="py-4 px-6 border-b border-grey-light text-gray-900">
-                    3 Items
+                    {orderItem.products.length} Items
                   </td>
                   <td className="py-4 px-6 border-b border-grey-light text-gray-900">
                     <a

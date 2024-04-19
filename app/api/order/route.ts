@@ -27,16 +27,12 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-    const token = req.cookies.get("token")?.value;
-    const data: any = token && (await verifyjwt(token));
+    const userId = req.nextUrl.searchParams.get("userId");
     try {
         await connectDB();
-        const orders = await OrderModel.find({ userId: data.payload.id });
+        const orders = await OrderModel.find({ userId });
         return Response.json(orders);
     } catch (error) {
         Response.json({ error: JSON.stringify(error) });
     }
 }
-
-
-
