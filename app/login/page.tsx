@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import loginImage from "../../lib/assets/images/login.jpg";
+import loginImage from "@/app/assets/images/login.jpg";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");

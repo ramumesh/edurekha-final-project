@@ -2,8 +2,8 @@
 import bcryptjs from "bcryptjs"
 import { SignJWT, decodeJwt } from "jose"
 import { NextRequest } from "next/server";
-import { UserModel } from "../../../lib/db/model/users";
-import connectDB from "../../../lib/db/db";
+import { UserModel } from "@/app/lib/db/model/users";
+import connectDB from "@/app/lib/db/db";
 
 export async function POST(req: NextRequest) {
 

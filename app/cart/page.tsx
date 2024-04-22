@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import loginImg from "@/lib/assets/images/dfimg.jpg";
-import { getCart, putCart, removeCart } from "../services/cartServices";
-import { ICart } from "@/lib/interfaces/ICart";
+import loginImg from "@/app/assets/images/dfimg.jpg";
+import { getCart, putCart, removeCart } from "@/app/services/cartServices";
+import { ICart } from "@/app/interfaces/ICart";
 
 const CartPage = () => {
   const router = useRouter();

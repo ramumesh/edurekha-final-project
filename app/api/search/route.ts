@@ -1,5 +1,5 @@
-import { ProductModel } from "@/lib/db/model/products";
-import connectDB from "../../../lib/db/db";
+import { ProductModel } from "@/app/lib/db/model/products";
+import connectDB from "@/app/lib/db/db";
 import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest, { }) {

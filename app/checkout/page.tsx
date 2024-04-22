@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { getCart, removeCart } from "../services/cartServices";
-import { ICart } from "@/lib/interfaces/ICart";
+import { ICart } from "@/app/interfaces/ICart";
 import { postOrder } from "../services/orderServices";
 
 const CheckoutPage = () => {

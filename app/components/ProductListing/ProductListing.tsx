@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { IProduct } from "../../../lib/interfaces/IProduct";
+import { IProduct } from "../../interfaces/IProduct";
 import { useDebouncedCallback } from "use-debounce";
 import Link from "next/link";
-import productImage from "../../../lib/assets/images/packing-product-icon.webp";
+import productImage from "@/app/assets/images/packing-product-icon.webp";
 import { Input } from "antd";
 import Image from "next/image";
 import { SearchOutlined } from "@ant-design/icons";
@@ -24,7 +24,7 @@ export default function ProductListing({
       }
     },
     500,
-    { maxWait: 2000 }
+    { maxWait: 1000 }
   );
 
   useEffect(() => {

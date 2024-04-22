@@ -1,5 +1,5 @@
-import { OrderModel } from "@/lib/db/model/order";
-import connectDB from "../../../../lib/db/db";
+import { OrderModel } from "@/app/lib/db/model/order";
+import connectDB from "@/app/lib/db/db";
 import { NextRequest } from "next/server";
 
 export async function GET(__: NextRequest, { params }: any) {
@@ -11,6 +11,6 @@ export async function GET(__: NextRequest, { params }: any) {
         return Response.json(order);
     } catch (error) {
         console.error("Error fetching products:", error);
-        Response.json({ error: "Internal Server Erro" });
+        return Response.json({ error: "Internal Server Erro" });
     }
 }

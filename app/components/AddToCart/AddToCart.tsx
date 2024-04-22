@@ -1,6 +1,6 @@
 "use client";
 import { postCart } from "@/app/services/cartServices";
-import { IProduct } from "@/lib/interfaces/IProduct";
+import { IProduct } from "@/app/interfaces/IProduct";
 import React from "react";
 import { toast } from "react-toastify";
 

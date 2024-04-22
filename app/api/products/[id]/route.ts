@@ -1,8 +1,9 @@
-import connectDB from "../../../../lib/db/db";
-import { ProductModel } from "../../../../lib/db/model/products";
-import { NextRequest } from "next/server";
+import { NextApiRequest, NextApiResponse } from "next";
+import { ProductModel } from "@/app/lib/db/model/products";
+import connectDB from "@/app/lib/db/db";
 
-export async function GET(_: NextRequest, { params }: any) {
+
+export async function GET(_: NextApiRequest, { params }: any, res: NextApiResponse) {
   try {
     await connectDB();
     const product = await ProductModel.find({
@@ -11,6 +12,6 @@ export async function GET(_: NextRequest, { params }: any) {
     return Response.json(product);
   } catch (error) {
     console.error("Error fetching products:", error);
-    Response.json({ error: "Internal Server Erro" });
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 }

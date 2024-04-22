@@ -1,9 +1,8 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import connectDB from "../../../lib/db/db";
-import { ProductModel } from "../../../lib/db/model/products";
+import connectDB from "@/app/lib/db/db";
+import { ProductModel } from "@/app/lib/db/model/products";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest, res: NextResponse) {
+export async function GET(req: NextRequest) {
   try {
     await connectDB();
     const query = req.nextUrl.searchParams.get("query");
@@ -18,6 +17,6 @@ export async function GET(req: NextRequest, res: NextResponse) {
     return Response.json(products);
   } catch (error) {
     console.error("Error fetching products:", error);
-    Response.json({ error: "Internal Server Erro" });
+    return Response.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

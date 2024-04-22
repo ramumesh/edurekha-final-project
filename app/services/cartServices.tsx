@@ -1,5 +1,5 @@
-import { ICart } from "@/lib/interfaces/ICart";
-import { IProduct } from "@/lib/interfaces/IProduct";
+import { ICart } from "@/app/interfaces/ICart";
+import { IProduct } from "@/app/interfaces/IProduct";
 
 const URL = "/api/cart";
 export const getCart = async () => {

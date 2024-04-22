@@ -1,6 +1,7 @@
-import { NextRequest } from "next/server";
-import connectDB from "../../../lib/db/db";
-import { CartModel } from "@/lib/db/model/cart";
+import { NextRequest, NextResponse } from "next/server";
+import connectDB from "@/app/lib/db/db";
+import { CartModel } from "@/app/lib/db/model/cart";
+import { createInternalErrorResponse, createMessageResponse } from "@/app/utils/apiUtils";
 
 
 export async function PUT(req: NextRequest) {
@@ -12,17 +13,12 @@ export async function PUT(req: NextRequest) {
         console.log("ExistingItem", existingItem);
         if (existingItem) {
             await CartModel.updateOne({ productId: product.productId }, { $set: { quantity: product.quantity } });
-            return Response.json({
-                message: "Cart updated"
-            });
+            return createMessageResponse('Cart updated');
         } else {
             throw new Error("Product not existing")
         }
-
-    } catch (error) {
-        return Response.json({
-            message: error
-        });
+    } catch (error: any) {
+        return createInternalErrorResponse(error);
     }
 }
 export async function POST(req: NextRequest) {

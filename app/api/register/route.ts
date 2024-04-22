@@ -1,14 +1,14 @@
 
 import { SignJWT } from "jose";
 import { NextRequest } from "next/server";
-import { UserModel } from "../../../lib/db/model/users";
+import { UserModel } from "@/app/lib/db/model/users";
 import bcrypt from "bcryptjs";
-import connectDB from "../../../lib/db/db";
+import connectDB from "@/app/lib/db/db";
 
 
 export async function POST(req: NextRequest) {
     const { email, password, name } = await req.json();
-    
+
 
     const SECRET_KEY = process.env.JWT_SECRET_KEY;
 

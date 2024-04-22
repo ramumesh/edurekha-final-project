@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
-import connectDB from "../../../lib/db/db";
-import { OrderModel } from "@/lib/db/model/order";
-import { verifyjwt } from "@/lib/verifytoken";
+import connectDB from "@/app/lib/db/db";
+import { OrderModel } from "@/app/lib/db/model/order";
+import { cookies } from "next/headers";
 
 
 export async function POST(req: NextRequest) {
@@ -27,12 +27,14 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
+    const cookieStore = cookies();
+    cookieStore.delete("token");
     const userId = req.nextUrl.searchParams.get("userId");
     try {
         await connectDB();
         const orders = await OrderModel.find({ userId });
         return Response.json(orders);
     } catch (error) {
-        Response.json({ error: JSON.stringify(error) });
+        return Response.json({ error: JSON.stringify(error) });
     }
 }

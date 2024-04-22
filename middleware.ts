@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { verifyjwt } from "./lib/verifytoken";
+import { verifyjwt } from "./app/lib/verifytoken";
 
 export async function middleware(request: NextRequest) {
   try {
     const token = request.cookies.get("token")?.value;
     const isLoggedIn = token && (await verifyjwt(token));
+    console.log(isLoggedIn);
     if (isLoggedIn) {
       return NextResponse.next();
     } else {

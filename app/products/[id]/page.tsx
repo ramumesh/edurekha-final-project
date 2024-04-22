@@ -1,5 +1,5 @@
 import Image from "next/image";
-import productImage from "../../../lib/assets/images/packing-product-icon.webp";
+import productImage from "@/app/assets/images/packing-product-icon.webp";
 import "react-toastify/dist/ReactToastify.css";
 import AddToCart from "@/app/components/AddToCart/AddToCart";
 import { ToastContainer } from "react-toastify";
