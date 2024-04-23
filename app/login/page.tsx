@@ -1,38 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import loginImage from "@/app/assets/images/login.jpg";
+import { useFormState } from "react-dom";
+import { loginUser } from "../actions/action";
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [errMessage, setErrMessage] = useState("");
-  const router = useRouter();
-
-  async function login(e: any) {
-    e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:3000/api/login", {
-        method: "POST",
-        body: JSON.stringify({ email, password }),
-      });
-      const json = await response.json();
-      console.log("login message", json.message);
-      if (json?.message === "user logged in") {
-        console.log("correct", json.message);
-        sessionStorage.setItem("userId", json.userId);
-        e.preventDefault();
-        router.push("/home");
-      } else {
-        console.log("incorrect", json.message);
-        setErrMessage("Invalid Credentials");
-      }
-    } catch (error) {
-      setErrMessage("Invalid Credentials");
-    }
-  }
+  const [state, formAction] = useFormState(loginUser, {
+    errorMessage: "",
+  });
 
   return (
     <main>
@@ -54,43 +30,35 @@ export default function LoginPage() {
                 <h1 className="mb-4 text-2xl font-bold text-center text-gray-700">
                   Login to Your Account
                 </h1>
-                <form onSubmit={login}>
+                <form action={formAction}>
                   <div>
                     <label className="block text-sm">Email</label>
                     <input
+                      name="email"
                       type="email"
                       className="block w-full mt-1 text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-900"
                       placeholder="name@example.com"
-                      onChange={(e) => {
-                        console.log(e.target.value);
-                        setEmail(e.target.value);
-                      }}
                     />
                   </div>
 
                   <div className="mt-4">
                     <label className="block text-sm">Password</label>
                     <input
+                      name="password"
                       type="password"
                       className="block w-full mt-1 text-sm border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-900"
                       placeholder="***************"
-                      onChange={(e) => {
-                        setPassword(e.target.value);
-                      }}
                     />
                   </div>
 
                   <div className="mt-6">
                     <button
-                      type="button"
-                      onClick={login}
+                      type="submit"
                       className="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-300"
                     >
                       Log In
                     </button>
-                    <div className="text-red-400 ">
-                      {errMessage.length > 0 ? errMessage : ""}
-                    </div>
+                    <div className="text-red-400 ">{state?.errorMessage}</div>
                   </div>
                 </form>
 
