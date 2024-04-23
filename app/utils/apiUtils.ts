@@ -9,5 +9,5 @@ export const createDataResponse = (data: any) => {
 }
 
 export const createMessageResponse = (message: string) => {
-    return NextResponse.json({ message }, { status: 500 });
+    return NextResponse.json({ message }, { status: 200 });
 }

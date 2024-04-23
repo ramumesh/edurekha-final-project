@@ -3,7 +3,7 @@ import { IProduct } from "@/app/interfaces/IProduct";
 
 const URL = "/api/cart";
 export const getCart = async () => {
-  return fetch(`${URL}?userId=${sessionStorage.getItem("userId")}`);
+  return fetch(URL);
 };
 
 export const putCart = (product: ICart) => {

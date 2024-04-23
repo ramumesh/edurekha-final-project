@@ -4,9 +4,11 @@ import connectDB from "@/app/lib/db/db";
 import bcryptjs from "bcryptjs";
 import { UserModel } from '@/app/lib/db/model/users';
 import { redirect } from 'next/navigation';
-import { SignJWT, decodeJwt } from "jose";
+import { SignJWT } from "jose";
 import { cookies } from 'next/headers'
-import { IProduct } from '../interfaces/IProduct';
+import { CartModel } from '@/app/lib/db/model/cart';
+import { getUserIdFromToken, verifyjwt } from '@/app/lib/verifytoken';
+import { randomUUID } from 'crypto';
 
 const registerUserSchema = z.object({
     name: z.string().min(1, { message: "Name is required" }),
@@ -133,9 +135,31 @@ export async function registerUser(_: any, formData: FormData) {
     redirect('/login');
 }
 
-export async function addProduct(product: IProduct, formData: FormData) {
-    return {
-        errorMessage: "",
-        product: {}
+export async function addToCart(data: any, _: FormData) {
+    const userId = await getUserIdFromToken();
+    const { product, message } = data;
+    try {
+        await connectDB();
+        const existingItem = await CartModel.findOne({ productId: product.productId });
+        if (existingItem) {
+            return {
+                message: "This Product already existing in your cart. Please adjust the quantity before checking out.",
+                product,
+                messageId: randomUUID() as string,
+            }
+        }
+        const newCart = new CartModel({ userId, productId: product.productId, brandName: product.brandName, productName: product.productName, productPrice: product.productPrice, quantity: 1 });
+        await newCart.save();
+        return {
+            message: "Product added to Cart Successfully",
+            product,
+            messageId: randomUUID() as string,
+        }
+    } catch (error) {
+        return {
+            message: JSON.stringify(error),
+            product,
+            messageId: randomUUID() as string,
+        }
     }
 }

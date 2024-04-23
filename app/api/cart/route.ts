@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/app/lib/db/db";
 import { CartModel } from "@/app/lib/db/model/cart";
 import { createInternalErrorResponse, createMessageResponse } from "@/app/utils/apiUtils";
+import { verifyjwt } from "@/app/lib/verifytoken";
 
 
 export async function PUT(req: NextRequest) {
@@ -45,11 +46,11 @@ export async function POST(req: NextRequest) {
     }
 }
 
-
-
-
 export async function GET(req: NextRequest) {
-    const userId = req.nextUrl.searchParams.get("userId");
+    const token = req.cookies.get("token")?.value;
+    const tokenData: any = token && (await verifyjwt(token));
+    const userId = tokenData?.payload?.id;
+    console.log(userId);
     try {
         await connectDB();
         const carts = await CartModel.find({ userId: userId });
@@ -58,9 +59,7 @@ export async function GET(req: NextRequest) {
         console.error("Error fetching products:", error);
         Response.json({ error: "Internal Server Erro" });
     }
-
 }
-
 
 export async function DELETE(req: NextRequest) {
     await connectDB();
